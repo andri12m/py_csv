@@ -92,7 +92,11 @@ def proc_build_category_chains():
     # print(list_category_chain[-1])
 
 
-etree = ET.parse('t3.xml')
+file_xml = 'dat/t3.xml'
+file_csv = 'dat/test.csv'
+file_chunk = 'dat/tv'
+
+etree = ET.parse(file_xml)
 for e in etree.iter():
   if e.tag=='category':
     proc_category(e)
@@ -101,7 +105,7 @@ print('Категорій: ', len(list_category))
 # print('Categories chains: ', len(list_category_chain))
 
 
-text_file = open("test.csv", "w", encoding='utf-8')
+text_file = open(file_csv, "w", encoding='utf-8')
 cols = 120              # 4*20 + 4*3 + 28 = 120
 offer = [''] * cols      
 e_count = 0
@@ -318,10 +322,10 @@ text_file.close()
 
 hed = '''ID, Type, ID, Name, Published, "Is featured?", "Visibility in catalog", "Short description", Description, "Date sale price starts", "Date sale price ends", "Tax status", "Tax class", "In stock?", "Backorders allowed?", "Sold individually?", "Weight (kg)", "Length (cm)", "Width (cm)", "Height (cm)", "Allow customer reviews?", "Purchase Note", "Sale price", "Regular price", Categories, Tags, "Shipping class", Images, "Attribute 1 name", "Attribute 1 value(s)", "Attribute 1 visible", "Attribute 1 global", "Attribute 2 name", "Attribute 2 value(s)", "Attribute 2 visible", "Attribute 2 global", "Attribute 3 name", "Attribute 3 value(s)", "Attribute 3 visible", "Attribute 3 global", "Attribute 4 name", "Attribute 4 value(s)", "Attribute 4 visible", "Attribute 4 global", "Attribute 5 name", "Attribute 5 value(s)", "Attribute 5 visible", "Attribute 5 global", "Attribute 6 name", "Attribute 6 value(s)", "Attribute 6 visible", "Attribute 6 global", "Attribute 7 name", "Attribute 7 value(s)", "Attribute 7 visible", "Attribute 7 global", "Attribute 8 name", "Attribute 8 value(s)", "Attribute 8 visible", "Attribute 8 global", "Attribute 9 name", "Attribute 9 value(s)", "Attribute 9 visible", "Attribute 9 global", "Attribute 10 name", "Attribute 10 value(s)", "Attribute 10 visible", "Attribute 10 global", "Attribute 11 name", "Attribute 11 value(s)", "Attribute 11 visible", "Attribute 11 global", "Attribute 12 name", "Attribute 12 value(s)", "Attribute 12 visible", "Attribute 12 global", "Attribute 13 name", "Attribute 13 value(s)", "Attribute 13 visible", "Attribute 13 global", "Attribute 14 name", "Attribute 14 value(s)", "Attribute 14 visible", "Attribute 14 global", "Attribute 15 name", "Attribute 15 value(s)", "Attribute 15 visible", "Attribute 15 global", "Attribute 16 name", "Attribute 16 value(s)", "Attribute 16 visible", "Attribute 16 global", "Attribute 17 name", "Attribute 17 value(s)", "Attribute 17 visible", "Attribute 17 global", "Attribute 18 name", "Attribute 18 value(s)", "Attribute 18 visible", "Attribute 18 global", "Attribute 19 name", "Attribute 19 value(s)", "Attribute 19 visible", "Attribute 19 global", "Attribute 20 name", "Attribute 20 value(s)", "Attribute 20 visible", "Attribute 20 global"\n''' 
 
-with open('test.csv', 'r', encoding='utf-8') as fin:
+with open(file_csv, 'r', encoding='utf-8') as fin:
   data = fin.read().splitlines(True)
   data[0] = hed
-with open('test.csv', 'w', encoding='utf-8') as fileout:
+with open(file_csv, 'w', encoding='utf-8') as fileout:
   fileout.writelines(data[0:])
   fileout.close()
 
@@ -339,7 +343,7 @@ for lin in dat:
   elif dc == 500:
     dt.append(lin)
     dtc += 1
-    fs = open('tv'+ str(dtc) +'.csv', 'w', encoding='utf-8')
+    fs = open(file_chunk + str(dtc) +'.csv', 'w', encoding='utf-8')
     fs.writelines(hed)
     fs.writelines(dt)
     fs.close()
@@ -347,7 +351,7 @@ for lin in dat:
     dc = 0
 if dc > 0:
   dtc += 1
-  fs = open('tv'+ str(dtc) +'.csv', 'w', encoding='utf-8')
+  fs = open(file_chunk + str(dtc) +'.csv', 'w', encoding='utf-8')
   fs.writelines(hed)
   fs.writelines(dt)
   fs.close()
